@@ -105,11 +105,54 @@ kops create cluster mycluster.k8s.local --node-count=1 --node-size=t3.small --ma
 ```
 
 10. Create Jenkins pipeline
-Fork and create github hook
+
+Fork and create github webhook
 ```bash
 
 git fork https://github.com/postmanlabs/httpbin
-create webhook in the dashboard to trigger jenkins
+
+#create webhook in github dashboard to trigger jenkins
 
 ```
+Create job 
+
+```bash
+
+## Pipeline script
+#create dockerhub credential
+node {
+    
+    
+    def registry = "nihalkaradan/test-repo"
+    def registryCredential = 'dockerhub_id'
+  
+    stage('Preparation') { // for display purposes
+        // Get some code from a GitHub repository
+        git 'https://github.com/nihalkaradan/httpbin'
+        // Get the Maven tool.
+        // ** NOTE: This 'M3' Maven tool must be configured
+        // **       in the global configuration.
+        
+    }
+    stage('Build and Publish') {
+        // Run the maven build
+        
+       sh "docker build . -t nihalkaradan/test:3.0"
+       withDockerRegistry([ credentialsId: "${registryCredential}", url: "" ]) {
+          sh "docker build . -t nihalkaradan/test:3.0"
+          sh 'docker push nihalkaradan/test:3.0'
+        }
+    }
+    stage('Deploy on K8s'){
+        sh "ansible-playbook playbook.yml  --user=jenkins "
+    }
+    stage('Results') {
+        sh "touch test3"
+    }
+}
+
+
+```
+
+
 
