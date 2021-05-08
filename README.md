@@ -103,8 +103,32 @@ ssh-keygen -f .ssh/id_rsa
 export KOPS_STATE_STORE=s3://kops-state-13
 kops create cluster mycluster.k8s.local --node-count=1 --node-size=t3.small --master-size=t3.small --zones ap-south-1a --yes
 ```
+10. Create ansible playbook
 
-10. Create Jenkins pipeline
+/var/lib/jenkins/workspace/{projectname}
+
+```bash
+
+- hosts: localhost
+  vars:
+    ImageName: ""
+    Namespace: "nihal"
+    imageTag: ""
+  #remote_user: ansible
+  #become: true
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: Create Namespace {{ Namespace }}
+      command: "kubectl create namespace {{ Namespace }}"
+      ignore_errors: yes
+    - name: Create deployment {{ Namespace }}
+      command: "kubectl create -f deployment.yml"
+      ignore_errors: yes
+
+
+```
+11. Create Jenkins pipeline
 
 Fork and create github webhook
 ```bash
