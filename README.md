@@ -1,5 +1,8 @@
 # Jenkins CI/CD 
 
+#### Jenkins URL http://ec2-13-234-67-81.ap-south-1.compute.amazonaws.com
+#### Components used
+
 ## Steps involved
 
 1. Create ec2 instance
@@ -105,7 +108,7 @@ kops create cluster mycluster.k8s.local --node-count=1 --node-size=t3.small --ma
 ```
 10. Create ansible playbook
 
-/var/lib/jenkins/workspace/{projectname}
+/var/lib/jenkins/workspace/{projectname}/playbook.yml
 
 ```bash
 
@@ -122,13 +125,18 @@ kops create cluster mycluster.k8s.local --node-count=1 --node-size=t3.small --ma
     - name: Create Namespace {{ Namespace }}
       command: "kubectl create namespace {{ Namespace }}"
       ignore_errors: yes
-    - name: Create deployment {{ Namespace }}
-      command: "kubectl create -f deployment.yml"
+    - name: Deploy 
+      command: "helm install cliff-ai cliff-ai-helm/ --values cliff-ai-helm/values.yaml"
+      ignore_errors: yes
+    - name: Upgrade
+      command: "helm upgrade cliff-ai cliff-ai-helm/ --values cliff-ai-helm/values.yaml "
       ignore_errors: yes
 
 
 ```
-11. Create Jenkins pipeline
+11. Create deployment file
+
+12. Create Jenkins pipeline
 
 Fork and create github webhook
 ```bash
@@ -143,6 +151,8 @@ Create job
 ```bash
 
 ## Pipeline script
+
+#Build trigger GitHub hook trigger for GITScm polling
 #create dockerhub credential
 node {
     
@@ -169,7 +179,7 @@ node {
         sh "ansible-playbook playbook.yml  --user=jenkins "
     }
     stage('Results') {
-        sh "touch test3"
+        sh "echo JOB ran successfully ..."
     }
 }
 
