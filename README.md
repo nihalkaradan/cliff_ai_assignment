@@ -86,7 +86,7 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 9. Spin up kubernetes cluster with kops
-create s3 bucket
+##### create s3 bucket
 install kops
 ```bash
 
