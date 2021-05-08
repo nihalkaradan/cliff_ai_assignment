@@ -12,7 +12,7 @@ sudo apt search openjdk
 sudo apt install openjdk-11-jdk
 sudo apt install openjdk-11-jdk
 ```
-3. Install jenkins
+3. Install and start jenkins 
 
 ```bash
 wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
@@ -20,35 +20,31 @@ sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \
     /etc/apt/sources.list.d/jenkins.list'
 sudo apt-get update
 sudo apt-get install jenkins
-```
-4. Start jenkins
-
-```bash
 sudo systemctl daemon-reload
 sudo systemctl start jenkins
 sudo systemctl status jenkins
 ```
-5. Install Docker
+4. Install Docker
 
 ```bash
 sudo apt update
 sudo apt install docker.io
 ```
-6. Add jenkins user to docker
+5. Add jenkins user to docker
 
 ```bash
 sudo groupadd docker
 sudo usermod -aG docker jenkins
 ```
 
-7. Install pip and ansible
+6. Install pip and ansible
 
 ```bash
 sudo apt update
 sudo apt install python3-pip
 sudo pip3 install ansible
 ```
-8. Install and setup nginx as reverse proxy
+7. Install and setup nginx reverse proxy
 
 ```bash
 sudo apt update
@@ -77,3 +73,4 @@ server {
 }
 
 ```
+
