@@ -2,7 +2,7 @@
 
 #### Jenkins URL http://ec2-13-234-67-81.ap-south-1.compute.amazonaws.com
 #### Components used
-![alt text](https://github.com/nihalkaradan/cliff_ai_assignment/blob/master/ci-cd-diagram.jpg?raw=true)
+![alt text](https://github.com/nihalkaradan/cliff_ai_assignment/blob/master/ci-cd-diagram.png?raw=true)
 ## Steps involved
 
 1. Create ec2 instance
