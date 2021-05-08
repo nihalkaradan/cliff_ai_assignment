@@ -86,10 +86,20 @@ unzip awscliv2.zip
 sudo ./aws/install
 ```
 9. Spin up kubernetes cluster with kops
-##### create s3 bucket
-install kops
+##### create s3 bucket to store state
 ```bash
+s3://kops-state-13
+```
+Install kops
 
+```bash
+curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+
+```
+Spin up cluster
+
+```bash
 ssh-keygen -f .ssh/id_rsa
-
+export KOPS_STATE_STORE=s3://kops-state-13
+kops create cluster mycluster.k8s.local --node-count=1 --node-size=t3.small --master-size=t3.small --zones ap-south-1a --yes
 ```
