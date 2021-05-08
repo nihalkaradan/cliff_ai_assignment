@@ -126,16 +126,14 @@ node {
     def registry = "nihalkaradan/test-repo"
     def registryCredential = 'dockerhub_id'
   
-    stage('Preparation') { // for display purposes
-        // Get some code from a GitHub repository
+    stage('Preparation') { 
+        
         git 'https://github.com/nihalkaradan/httpbin'
-        // Get the Maven tool.
-        // ** NOTE: This 'M3' Maven tool must be configured
-        // **       in the global configuration.
+        
         
     }
     stage('Build and Publish') {
-        // Run the maven build
+        
         
        sh "docker build . -t nihalkaradan/test:3.0"
        withDockerRegistry([ credentialsId: "${registryCredential}", url: "" ]) {
