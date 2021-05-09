@@ -134,9 +134,9 @@ kops create cluster mycluster.k8s.local --node-count=1 --node-size=t3.small --ma
 
 
 ```
-11. Create deployment file
 
-12. Create Jenkins pipeline
+
+11. Create Jenkins pipeline
 
 Fork and create github webhook
 ```bash
@@ -157,7 +157,7 @@ Create job
 node {
     
     
-    def registry = "nihalkaradan/test-repo"
+    # def registry = "nihalkaradan/test-repo"
     def registryCredential = 'dockerhub_id'
   
     stage('Preparation') { 
