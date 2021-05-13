@@ -169,7 +169,7 @@ node {
     stage('Build and Publish') {
         
         
-       sh "docker build . -t nihalkaradan/test:3.0"
+       
        withDockerRegistry([ credentialsId: "${registryCredential}", url: "" ]) {
           sh "docker build . -t nihalkaradan/test:3.0"
           sh 'docker push nihalkaradan/test:3.0'
